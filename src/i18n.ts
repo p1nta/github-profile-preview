@@ -12,7 +12,9 @@ i18n
     resources: {
       en: {
         translation: {
-          homeTitle: 'Home'
+          homeTitle: 'GitHub profile preview',
+          inputPlaceholder: 'Enter GitHub username',
+          submitButton: 'Submit',
         },
       },
     },
