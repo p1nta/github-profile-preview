@@ -2,20 +2,15 @@ import { useQuery } from '@apollo/client';
 
 import { GET_USER_DATA } from '../graphql/queries';
 
-
-interface ILanguage {
-  node: {
-    name: string;
-  };
-}
-
 interface IRepository {
   name: string;
   url: string;
   updatedAt: string;
-  languages: {
-    edges: ILanguage[];
-  };
+}
+
+interface IOrganization {
+  name: string;
+  login: string;
 }
 
 interface IUser {
@@ -25,7 +20,11 @@ interface IUser {
   bio?: string;
   createdAt: string;
   repositories: {
+    totalCount: number;
     nodes: IRepository[];
+  };
+  organizations: {
+    nodes: IOrganization[];
   };
 }
 
