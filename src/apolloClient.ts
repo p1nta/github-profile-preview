@@ -6,7 +6,7 @@ const httpLink = createHttpLink({
 });
 
 const authLink = setContext((_, { headers }) => {
-  const token = import.meta.env.REACT_APP_GITHUB_TOKEN;
+  const token = import.meta.env.VITE_REACT_APP_GITHUB_TOKEN;
   return {
     headers: {
       ...headers,
