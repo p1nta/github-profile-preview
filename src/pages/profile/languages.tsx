@@ -36,12 +36,13 @@ const Languages: React.FC<ILanguagesProps> = (props) => {
         {t('languagesTitle')}
       </h3>
       <ul className={s.numbered_list}>
-        {languagePercentages.map(([language, percent]) => (
+        {languagePercentages.map(([language, value]) => (
           <li
             key={language}
             className={s.numbered_list_item}
+            style={{ color: value.color }}
           >
-            {language}: {`${percent.toFixed(2)}%`}
+            {language}: {`${value.size.toFixed(2)}%`}
           </li>
         ))}
       </ul>

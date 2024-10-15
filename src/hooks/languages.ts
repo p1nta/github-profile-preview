@@ -8,6 +8,7 @@ import { GET_USER_LANGUAGES } from '../graphql/queries';
 export interface ILanguage {
   node: {
     name: string;
+    color: string;
   }
   size: number;
 }
@@ -38,27 +39,27 @@ interface IQueryVars {
 }
 
 export const useLanguages = (username: string) => {
-  const [languagePercentages, setLanguagePercentages] = useState<Array<[string, number]>>([]);
+  const [languagePercentages, setLanguagePercentages] = useState<Array<[string, { size: number; color: string; }]>>([]);
 
   const [fetchLanguages, { loading, error }] = useLazyQuery<IQueryData, IQueryVars>(GET_USER_LANGUAGES, {
     onCompleted: (data) => countLanguages(data.user),
   });
 
-  const allLanguages = new Map<string, number>();
+  const allLanguages = new Map<string, { size: number; color: string; }>();
   let totalSize = 0;
 
   const calculateLanguagePercentages = () => {
-    const newLanguagePercentages: Array<[string, number]> = [];
+    const newLanguagePercentages: Array<[string, { size: number; color: string; }]> = [];
 
-    allLanguages.forEach((size, language) => {
-      const percent = (size / totalSize) * 100;
+    allLanguages.forEach((value, language) => {
+      const percent = (value.size / totalSize) * 100;
 
       if (percent >= 0.01) {
-        newLanguagePercentages.push([language, percent]);
+        newLanguagePercentages.push([language, { size: percent, color: value.color }]);
       }
     });
 
-    const result = newLanguagePercentages.sort((a, b) => b[1] - a[1]);
+    const result = newLanguagePercentages.sort((a, b) => b[1].size - a[1].size);
 
     setLanguagePercentages(result);
   }
@@ -71,9 +72,21 @@ export const useLanguages = (username: string) => {
         totalSize += lang.size;
 
         if (allLanguages.has(lang.node.name)) {
-          allLanguages.set(lang.node.name, allLanguages.get(lang.node.name)! + lang.size);
+          allLanguages.set(
+            lang.node.name,
+            {
+              size: allLanguages.get(lang.node.name)!.size + lang.size,
+              color: lang.node.color,
+            }
+          );
         } else if (lang.size) {
-          allLanguages.set(lang.node.name, lang.size);
+          allLanguages.set(
+            lang.node.name,
+            {
+              size: lang.size,
+              color: lang.node.color,
+            }
+          );
         }
       });
     });
@@ -95,7 +108,7 @@ export const useLanguages = (username: string) => {
   useEffect(() => {
     fetchLanguages({ variables: { username, after: null } })
   }, [username])
-
+  
   return {
     languagePercentages,
     loading,

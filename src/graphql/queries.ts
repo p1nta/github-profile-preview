@@ -36,6 +36,7 @@ query($username: String!, $after: String) {
           edges {
             node {
               name
+              color
             }
             size
           }
