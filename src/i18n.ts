@@ -16,8 +16,8 @@ i18n
           inputPlaceholder: 'Enter GitHub username',
           submitButton: 'Submit',
 
-          repos: 'Public Repos {{count}}',
-          createdAt: 'Member Since: {{createdAt}}',
+          repos: 'Public Repos: ',
+          createdAt: 'Member Since: ',
           updatedAt: 'UpdatedAt: {{updatedAt}}',
           organizationsTitle: 'Organizations:',
           repositoriesTitle: 'Recent Repositories:',

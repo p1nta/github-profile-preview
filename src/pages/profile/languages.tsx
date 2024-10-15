@@ -17,13 +17,22 @@ const Languages: React.FC<ILanguagesProps> = (props) => {
 
   const { languagePercentages, loading, error } = useLanguages(username as string)
 
-  if (loading) return <Loading />;
-  if (error) return <Error message={error?.message} />;
+  if (loading) {
+    return (
+      <Loading variant="raw" />
+    );
+  }
+
+  if (error) {
+    return (
+      <Error variant="raw" message={error?.message} />
+    );
+  }
 
 
   return (
     <>
-      <h3 className={s.user_info_raw}>
+      <h3 className={s.user_info_raw_title}>
         {t('languagesTitle')}
       </h3>
       <ul className={s.numbered_list}>

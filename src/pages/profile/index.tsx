@@ -14,9 +14,23 @@ function Profile() {
 
   const { loading, error, data } = useUser(username as string);
 
-  if (loading) return <Loading />;
-  if (error) return <Error message={error?.message} />;
-  if (!data || !data.user) return <Error message={t('userNotFound')} />;
+  if (loading) {
+    return (
+      <Loading variant="overlay" />
+    );
+  }
+
+  if (error) {
+    return (
+      <Error variant="overlay" message={error?.message} />
+    )
+  }
+
+  if (!data || !data.user) {
+    return (
+      <Error variant="overlay" message={t('userNotFound')} />
+    )
+  }
 
   const { user } = data;
 
@@ -28,16 +42,22 @@ function Profile() {
       <hr />
 
       <p className={s.user_info_raw}>
-        {t('repos', { count: user.repositories.totalCount })}
+        <span className={s.user_info_raw_title}>
+          {t('repos')}
+        </span>
+        {user.repositories.totalCount}
       </p>
       <hr />
 
       <p className={s.user_info_raw}>
-        {t('createdAt', { createdAt: new Date(user.createdAt).toLocaleDateString() })}
+        <span className={s.user_info_raw_title}>
+          {t('createdAt')}
+        </span>
+        {new Date(user.createdAt).toLocaleDateString()}
       </p>
       <hr />
 
-      <h3 className={s.user_info_raw}>
+      <h3 className={s.user_info_raw_title}>
         {t('organizationsTitle')}
       </h3>
       <ul className={s.numbered_list}>
@@ -52,8 +72,8 @@ function Profile() {
       </ul>
       <hr />
 
-      <h3 className={s.user_info_raw}>
-      {t('repositoriesTitle')}
+      <h3 className={s.user_info_raw_title}>
+        {t('repositoriesTitle')}
       </h3>
       <ul className={s.numbered_list}>
         {user.repositories.nodes.map((repo) => (
@@ -64,13 +84,14 @@ function Profile() {
             <a href={repo.url} target="_blank" rel="noreferrer">
               {repo.name}
             </a>
-            <br/>
+            <br />
             <span>
-            {t('updatedAt', { updatedAt: new Date(repo.updatedAt).toLocaleDateString() })}
-              </span>
+              {t('updatedAt', { updatedAt: new Date(repo.updatedAt).toLocaleDateString() })}
+            </span>
           </li>
         ))}
       </ul>
+      <hr />
 
       <Languages username={username} />
 
