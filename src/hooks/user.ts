@@ -36,7 +36,7 @@ interface IQueryVars {
   username: string;
 }
 
-export const useApiUser = (username: string) => {
+export const useUser = (username: string) => {
   return useQuery<IQueryData, IQueryVars>(GET_USER_DATA, {
     variables: { username: username as string },
   });

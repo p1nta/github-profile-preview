@@ -15,6 +15,17 @@ i18n
           homeTitle: 'GitHub profile preview',
           inputPlaceholder: 'Enter GitHub username',
           submitButton: 'Submit',
+
+          repos: 'Public Repos {{count}}',
+          createdAt: 'Member Since: {{createdAt}}',
+          updatedAt: 'UpdatedAt: {{updatedAt}}',
+          organizationsTitle: 'Organizations:',
+          repositoriesTitle: 'Recent Repositories:',
+          languagesTitle: 'Languages:',
+
+          loading: 'Loading...',
+          error: 'Error: {{message}}',
+          userNotFound: 'User not found',
         },
       },
     },
